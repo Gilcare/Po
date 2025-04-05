@@ -27,6 +27,7 @@ with sign_up:
             hospital_address = st.text_input("Hospital Address*")
 
             col5, col6 = st.columns(2)
+            
             with col5:
               hospital_city = st.text_input("City*")
               hospital_country = st.selectbox("Country*", ["United States", "Canada", "United Kingdom", "Australia", "Nigeria", "Ghana", "South Africa", "Other"])
@@ -75,3 +76,6 @@ with sign_up:
                     st.success("Registration successful")
             
             
+
+
+
