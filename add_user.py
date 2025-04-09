@@ -36,7 +36,7 @@ def add_new_patient_typing():
 
         # Use st.data_editor to create a spreadsheet-like input for lab results
         edited_df = st.data_editor(lab_df, column_config={
-            "Test Name": st.column_config.Selectbox("Select Test", options=["Complete Blood Count", "Malaria Parasite", "COVID-19 PCR", "Other"]),
+            "Test Name": st.column_config.SelectboxColumn("Select Test", options=["Complete Blood Count", "Malaria Parasite", "COVID-19 PCR", "Other"]),
             "Result": st.column_config.TextInput("Enter Result")
         }, use_container_width=True)
 
