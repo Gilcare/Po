@@ -19,9 +19,37 @@ def add_new_patient_typing():
         # Convert to text - Placeholder
         st.write("Audio transcription feature not implemented.")
 
+    # Data holders
+    lab_results = []
+    medical_images_data = []
     add_lab_investigations, add_medical_images, add_other_details = st.tabs(["Lab Investigation", "Medical Imaging", "Other Details"])
     with add_lab_investigations:
-        st.write("Add logic for auto fill in with AI")
+        st.markdown("**Quick Fill Lab Results**")
+        # Define columns for the editable data table
+        columns = ["Test Name", "Result"]
+        lab_df = pd.DataFrame(columns=columns)
+
+        # Use st.data_editor to create a spreadsheet-like input for lab results
+        edited_df = st.data_editor(lab_df, column_config={
+            "Test Name": st.column_config.Selectbox("Select Test", options=["Complete Blood Count", "Malaria Parasite", "COVID-19 PCR", "Other"]),
+            "Result": st.column_config.TextInput("Enter Result")
+        }, use_container_width=True)
+
+        if st.button("Add Lab Results"):
+            # Append the entered data to the lab_results list
+            for index, row in edited_df.iterrows():
+                test_name = row["Test Name"]
+                result = row["Result"]
+                if test_name and result:
+                    lab_results.append({"test": test_name, "result": result})
+        
+                    # Show success message after adding
+                    st.success("Lab results added successfully!")
+
+        # Optionally display the added lab results as a table below
+        if lab_results:
+            st.subheader("Added Lab Results")
+            st.dataframe(lab_results)
 
     with add_medical_images:
         # Logic for adding medical images
@@ -117,6 +145,54 @@ def add_new_patient_typing():
 
     result = patient_collection.insert_one(patient_data)
     st.success(f"Patient details saved with ID: {result.inserted_id}")
+
+
+
+
+
+
+
+
+import streamlit as st
+import pandas as pd
+
+# Data holders
+lab_results = []
+medical_images_data = []
+
+# Create tabs for different sections
+add_lab_investigations, add_medical_images, add_other_details = st.tabs(["Lab Investigation", "Medical Imaging", "Other Details"])
+
+# Lab Investigation Tab
+with add_lab_investigations:
+    st.markdown("**Quick Fill Lab Results**")
+    
+    # Define columns for the editable data table
+    columns = ["Test Name", "Result"]
+    lab_df = pd.DataFrame(columns=columns)
+
+    # Use st.data_editor to create a spreadsheet-like input for lab results
+    edited_df = st.data_editor(lab_df, column_config={
+        "Test Name": st.column_config.Selectbox("Select Test", options=["Complete Blood Count", "Malaria Parasite", "COVID-19 PCR", "Other"]),
+        "Result": st.column_config.TextInput("Enter Result")
+    }, use_container_width=True)
+
+    if st.button("Add Lab Results"):
+        # Append the entered data to the lab_results list
+        for index, row in edited_df.iterrows():
+            test_name = row["Test Name"]
+            result = row["Result"]
+            if test_name and result:
+                lab_results.append({"test": test_name, "result": result})
+        
+        # Show success message after adding
+        st.success("Lab results added successfully!")
+
+    # Optionally display the added lab results as a table below
+    if lab_results:
+        st.subheader("Added Lab Results")
+        st.dataframe(lab_results)
+
 
 
 
