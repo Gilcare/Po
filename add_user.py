@@ -1,3 +1,8 @@
+import streamlit as st
+import pandas as pd
+import uuid
+
+
 def add_new_patient_typing():
     """Add Patient's Details By Typing"""
     st.subheader("Add Patient Details By Typing")
